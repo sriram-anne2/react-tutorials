@@ -1,0 +1,294 @@
+***Difference between let and const -> diff ways of creating variables
+
+let => use for variable values
+
+const => use for constant values (never really changes)
+
+***Arrow Functions - creating javascript Functions
+
+const myFunc = (list of args) => {
+    // no issues with 'this' keyword
+    // when using this in arrow functions - will always keep its context
+}
+
+-> can omit the parenthisis if there is only one arg 
+const myFunc = arg1 => {
+
+}
+
+-> modified way of arrow function with only a single return statement
+const myFunc = number => {
+    return number * 2;
+}
+
+above function can be written as 
+
+const myFunc = number => number * 2;
+
+
+***Exports and Imports (modules)
+
+consider person.js file has the following content
+
+```
+const person = {
+    name: "ram"
+}
+
+export default person
+```
+
+consider util.js has the following content
+
+```
+export const clean = () => {
+    // some code here
+}
+
+export const baseData = 10;
+
+```
+
+when we need to use data from both of these files in a new file app.js, this is how we import
+
+```
+import person from './person.js'
+import somePerson from './person.js'
+
+//default export - can use whatever name we want to use
+
+
+import { clean } from './util.js' // have to mention the exact name of whatever we are importing
+//OR
+import { clean as yey} from './util.js' // can import using an alias
+//AND OR
+import * as everythingBundled from './util.js' 
+// can import everything under an alias which will contain all exports in the file as properties
+// can be used as everythingBundled.baseDate, everythingBundled.clean etc.
+
+```
+
+
+***Classes
+
+```
+class Person {
+    constructor() {
+        this.name = 'Sriram Anne';
+    }
+  
+    printName() {
+        console.log(this.name);
+    }
+}
+
+const person = new Person();
+person.printName();
+
+```
+
+Above code outputs Sriram Anne 
+Unlike Java/.NET => a class can only have one constructor
+
+```
+class Human {
+    constructor() {
+        this.age = 'Male';
+    }
+
+    printGender() {
+        console.log(this.gender);
+    }
+}
+
+// now if above created person class is extending human class
+// needs extends keyword
+// if constructor is present, need to call super() in the constructor call
+// but can override parent class values
+
+class Person extends Human {
+    constructor() {
+        super();
+        this.name = 'Sriram Anne';
+        this.gender = 'Female';
+    }
+}
+
+const person = new Person();
+person.printName();
+person.printGender(); // will print out Female but Male if line 113 is not there
+```
+
+Recap => properties are variables attached to classes/objects
+methods are functions attachted to classes/objects
+
+consider above code for class person -> written in older way (ES6)
+
+Updated code below
+
+```
+class Person extends Human{
+    name = 'Sriram Anne';
+    
+    // only need below declaration if you want to override parent
+    gender = 'Female'
+  
+    printName = () => {
+        console.log(this.name);
+    }
+}
+
+const person = new Person();
+person.printName();
+
+```
+
+***Spread and Rest Operators (...)
+
+Spread Operation -> used to split up array elements/object properties
+
+```
+const newArr = [...oldArray, 1, 2, 3] // will pull out all elements of oldArray and add 1 2 3 to the new array
+
+const newObj = {
+    ...oldObj,
+    newProp: 5
+}
+// will add all properties of oldObj to a new Object and add/replace a property newProp with the value 5
+
+```
+
+Rest Operation -> used to merge a list of functional args into an array
+
+```
+function sortArgs(...args) {
+    // all args passed merged as an array
+    // which means we can use array operations
+    return args.sort();
+}
+```
+
+***Destructuring
+
+Taking out elements/properties from both arrays and/or objects
+
+For Arrays:
+
+```
+const nums = [1,2,3];
+
+[numa, numb]
+[num1, , num2] = nums; // empty in the middle means we are not pulling out 2 from nums
+console.log(numa, numb); // will print 1 and 2
+console.log(num1, num2); // will print 1 and 3
+```
+
+For Objects:
+
+```
+{name} = { name: "Sriram", age: 28 }
+
+console.log(name) // will print Sriram
+console.log(age) // will print undefined because age is not being pulled out of the object
+
+```
+
+***Reference and Primitive Types
+
+numbers, strings, booleans => primitive types => meaning copying will copy values
+
+arrays and objects => reference types => meaning we point to the reference of it
+
+// copying in a mutable way
+```
+const person = {
+    name: 'Sriram'
+}
+
+const newPerson = person; // newPerson is pointing to location of person which is stored in memory
+
+console.log(newPerson) // will log person object with name as Sriram
+
+person.name = 'Nalluri'; // changing value of name on person
+
+console.log(newPerson) // will log person object with updated name as Nalluri 
+//because newPerson is pointing to person regardless of what changed on person
+
+```
+//above is not really copying - it's basically pointing not the value
+
+//below is the way to copy reference types in an immutable way
+
+```
+const person = {
+    name: 'Sriram'
+}
+
+const newPerson = {
+    ...person
+} 
+
+console.log(newPerson) // will log person object with name as Sriram
+
+person.name = 'Nalluri'; // changing value of name on person
+
+console.log(newPerson) // will still log person object with name unchanged
+
+```
+
+***Array Methods
+
+```
+
+const nums = [1,2,3];
+
+const doubleNums = nums.map((num) => {
+    return num * 2;
+})
+
+//map is built in array method
+//take a function as an input and exectue it on each element of the array
+
+//above function has num as representing each element in nums
+// map is basically creating a new array called doubleNums with the function doubling each
+```
+
+
+**** Coding Exercise ****
+
+Your task is to add the missing logic to a transformToObjects() function that transforms a list of numbers into a list of JavaScript objects.
+
+For the provided input [1, 2, 3] the transformToObjects() function should return [{val: 1}, {val: 2}, {val: 3}].
+
+
+```
+function transformToObjects(numberArray) {
+    // Todo: Add your logic
+    // should return an array of objects
+    const arrObjs = numberArray.map((num) => {
+        return {val: num}
+    });
+    return arrObjs;
+}
+```
+
+
+**** JS ARRAY FUNCTIONS ****
+
+JS Array Functions
+Not really next-gen JavaScript, but also important: JavaScript array functions like map() , filter() , reduce()  etc.
+
+You'll see me use them quite a bit since a lot of React concepts rely on working with arrays (in immutable ways).
+
+The following page gives a good overview over the various methods you can use on the array prototype - feel free to click through them and refresh your knowledge as required: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+Particularly important in this course are:
+
+map()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+find()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+findIndex()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+filter()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+reduce()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce?v=b
+concat()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat?v=b
+slice()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice
+splice()  => https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
