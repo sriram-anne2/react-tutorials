@@ -1,0 +1,23 @@
+*** React Notes
+
+JSX (javascript xml) => used to include html code in js files
+
+  // const paragraph = document.createElement('p');
+  // paragraph.textContent = 'This is a demo paragraph';
+  // document.getElementById('root').append(paragraph);
+
+Above is an imperative approach of adding a paragraph to the html page. 
+Using react is a declarative approach.
+
+
+
+*** Building a custom component
+
+App => main/root component that is in the starting file of index.js
+
+everything else are child components of App => react tree with App being the parent
+Other components will be used as regular html elements in the index file.
+
+A component in React => just a plain JS function (special case which returns cusotm Jsx code)
+
+* should only have one root element per JSX code snippet/return statement => workaround is to wrap everything in a single div
