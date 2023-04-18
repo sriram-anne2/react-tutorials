@@ -21,3 +21,30 @@ Other components will be used as regular html elements in the index file.
 A component in React => just a plain JS function (special case which returns cusotm Jsx code)
 
 * should only have one root element per JSX code snippet/return statement => workaround is to wrap everything in a single div
+
+** Core idea of components
+
+-> separation of concerns => dont do too many things in one and the same place (functions)
+-> reusability => dont' repeat yourself
+
+=>split big chunks of code into multiple smaller functions and be able to reuse it<=
+
+=> date objects cant be cast directly - have to convert to ISOString or somethign else.
+
+
+*** Passing Data via props
+
+Consider this
+ in App component - goalItem variable which holds 'Finish!'
+
+ custom component - CourseGoalItem component which has the following
+
+ <li> {goalItem} </li> // list of goal item dynamically
+
+ however problem is goalItem is part of App component and not part of custom component
+ components cant use data stored in other components
+
+To solve this:
+we can pass data to the component by adding an attribute and use that to access other vals.
+
+for a real life example - look at commit with title - "initial work with props"
